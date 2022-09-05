@@ -10,7 +10,5 @@ import java.util.List;
 @Repository
 public interface TrackingsRepository extends JpaRepository<Trackings, Integer> {
 
-//    List<Trackings> findByAllByParcelId(Parcels parcels);
-
-    List<Trackings> findAllByParcelId(Parcels parcelId);
+    List<Trackings> findAllByParcelId(Parcels parcel);
 }

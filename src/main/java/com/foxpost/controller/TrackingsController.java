@@ -34,17 +34,8 @@ public class TrackingsController {
         return trackingsService.saveOrUpdate(trackingDTO);
     }
 
-//    @GetMapping("/tracking/{parcelId}")
-//    private List<Trackings> getTrackingByOneParcelId(@PathVariable("parcelId") int parcelId) {
-//        return trackingsService.getTrackingsByParcelId(parcelId);
-//    }
-
-    @GetMapping("/trackingsParcelId/{parcelId}")
-    private List<Trackings> getAllTrackingsByParcelId(@PathVariable("parcelId") Parcels parcelId) {
-        return trackingsService.findAllTrackingsByParcelId(parcelId);
+    @GetMapping("/trackingsParcelNo/{parcelNo}")
+    private List<Trackings> getAllTrackingsByParcelId(@PathVariable("parcelNo") String parcelNumber) {
+        return trackingsService.findAllTrackingsByParcelNumber(parcelNumber);
     }
-//    @GetMapping("/trackings/{parcelId}")
-//    private List<Parcels> getOneParcelToAllTrackings(@PathVariable("parcelId") int parcelId) {
-//        return trackingsService.getOneParcelAllTrackings(parcelId);
-//    }
 }

@@ -12,7 +12,6 @@ public class ClientsController {
     @Autowired
     private ClientService clientService;
 
-    //    Ügyfelek lekérdezése
     @GetMapping("/clients")
     private List<Clients> getAllClients() {
         return clientService.findByAllClients();
@@ -31,8 +30,5 @@ public class ClientsController {
     private void deleteClient(@PathVariable("id") int id) {
         clientService.deleteClient(id);
     }
-
-
-
 
 }

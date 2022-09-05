@@ -19,13 +19,13 @@ public class Parcels {
     private List<Trackings> track;
     @OneToOne
     @JoinColumn(referencedColumnName = "ID")
-    private Clients senderId; // Ügyfél idegen kulcs feladó
+    private Clients senderId;
 
     @OneToOne
     @JoinColumn(referencedColumnName = "ID")
-    private Clients receiverId; // Ügyfél idegen kulcs címzett
+    private Clients receiverId;
 
-    private String parcelNo; // Csomagszám
+    private String parcelNo;
 
     public Parcels(Clients senderId, Clients receiverId, String parcelNo) {
         this.parcelNo = parcelNo;

@@ -97,7 +97,7 @@ values ('Sikeres Fizetés!');
 
 
 insert into trackings(PARCEL_ID_ID,EVENT_DATE,EVENT_ID_ID)
-values (1,current_timestamp(),1 );
+values (1,current_timestamp() ,1 );
 
 insert into trackings(PARCEL_ID_ID,EVENT_DATE,EVENT_ID_ID)
 values (1,current_timestamp(),2 );

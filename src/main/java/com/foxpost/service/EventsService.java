@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @AllArgsConstructor
@@ -18,27 +19,37 @@ public class EventsService {
 
     public List<Events> findByAllEvents() {
         log.info(" <-- Find all Events");
-        log.error(" <-- Can't find all Events");
         return eventsRepository.findAll();
     }
 
     public Events getEventById(short id) {
         log.info(" <-- Get Event By ID: {}", id);
-        log.error(" <-- Can't Find Event By Id: {}",id);
-        return eventsRepository.findById(id).orElse(null);
+        Events event = eventsRepository.findById(id).orElse(null);
+        if (Objects.nonNull(id)) {
+            return event;
+        } else {
+            log.error("Can't find Event");
+            return null;
+        }
     }
 
     public void saveOrUpdate(Events events) {
         log.info(" <-- Delete Event: {}", events);
-        log.error(" <-- Can't Delete Event: {}",events);
-        eventsRepository.save(events);
+        if (Objects.nonNull(events)) {
+            eventsRepository.save(events);
+        } else {
+            log.error(" <-- Can't Save");
+        }
         log.info(" <-- Save Successful");
     }
 
     public void deleteEvent(short id) {
         log.info(" <-- Delete Event: {}", id);
-        log.error(" <-- Can't Delete Event: {}",id);
-        eventsRepository.deleteById(id);
+        if (Objects.nonNull(id)) {
+            eventsRepository.deleteById(id);
+        } else {
+            log.error(" <-- Can't Delete");
+        }
         log.info(" <-- Delete Successful");
     }
 }
