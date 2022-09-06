@@ -1,0 +1,30 @@
+Clients Controller:
+
+localhost:8080/clients      getAllClients();    Find all Clients
+localhost:8080/client/{id}      getClient();    Find client by id
+localhost:8080/client          saveClient();    Save Client
+localhost:8080/client/{id}   deleteClient();    Delete Client
+
+Parcels Controller:
+
+localhost:8080/parcels                           getAllParcels();   Find all Parcels
+localhost:8080/parcelRecId/{receiverId}  getParcelToReceiverId();   Find parcel by receiverId
+localhost:8080/parcelSenId/{senderId}      getParcelToSenderId();   Find parcel by receiverId
+localhost:8080/parcel/{id}                           getParcel();   Find Parcel by id
+localhost:8080/parcel                               saveParcel();   Save Parcel
+localhost:8080/parcel/{id}                        deleteParcel();   Delete Parcel
+
+Events Controller:
+
+localhost:8080/events        getAllEvents();   Find all Events
+localhost:8080/event/{id}        getEvent();   Find Event by id
+localhost:8080/event            saveEvent();   Save Event
+localhost:8080/event/{id}     deleteEvent();   Delete Event
+
+Trackings Controller:
+
+localhost:8080/trackings                                 getAllTracking();  Find all Trackings
+localhost:8080/tracking/{id}                                getTracking();  Find Tracking by id
+localhost:8080/tracking/{id}                             deleteTracking();  Delete Tracking
+localhost:8080/tracking                                    saveTracking();  Save Tracking
+localhost:8080/trackingsParcelNo/{parcelNo}   getAllTrackingsByParcelNo();  Find all Trackings by ParcelNo

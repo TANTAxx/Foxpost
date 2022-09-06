@@ -11,19 +11,20 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Trackings {
+@Table(name = "trackings")
+public class Tracking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
    @ManyToOne
-    private Parcels parcelId;
+    private Parcel parcelId;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate eventDate;
     @OneToOne
     @JoinColumn(referencedColumnName = "ID")
-    private Events eventId;
+    private Event eventId;
 //    private Set<Events> eventId = new HashSet<>();
 
     @Override
@@ -37,10 +38,10 @@ public class Trackings {
         return sb.toString();
     }
 
-    public Trackings( Parcels parcelId){
+    public Tracking(Parcel parcelId){
         this.parcelId = parcelId;
     }
-    public Trackings(Events eventId, Parcels parcelId, LocalDate eventDate) {
+    public Tracking(Event eventId, Parcel parcelId, LocalDate eventDate) {
         this.eventId = eventId;
         this.parcelId = parcelId;
         this.eventDate = eventDate;

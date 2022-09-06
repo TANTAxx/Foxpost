@@ -1,8 +1,8 @@
 package com.foxpost.service;
 
 import com.foxpost.DTO.ParcelsDTO;
-import com.foxpost.entity.Clients;
-import com.foxpost.entity.Parcels;
+import com.foxpost.entity.Client;
+import com.foxpost.entity.Parcel;
 import com.foxpost.repository.ParcelsRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,15 +22,15 @@ public class ParcelsService {
     private ParcelsRepository parcelsRepository;
 
 
-    public List<Parcels> findAllParcels() {
+    public List<Parcel> findAllParcels() {
         log.info(" <-- Find all Parcels: {}");
         return parcelsRepository.findAll();
     }
 
-    public Parcels saveOrUpdate(ParcelsDTO parcelsDTO) {
+    public Parcel saveOrUpdate(ParcelsDTO parcelsDTO) {
         log.info(" <-- In Save Parcel: {}", parcelsDTO);
         String parcelNO = parcelsDTO.getParcelNo();
-        Parcels parcel = new Parcels(
+        Parcel parcel = new Parcel(
                 clientService.getClientById(parcelsDTO.getReceiverId()),
                 clientService.getClientById(parcelsDTO.getSenderId()),
                 parcelNO
@@ -53,9 +53,9 @@ public class ParcelsService {
         }
     }
 
-    public Parcels getParcelById(int id) {
+    public Parcel getParcelById(int id) {
         log.info(" <-- Find Parcel By ID : {}", id);
-        Parcels parcel = parcelsRepository.findById(id).orElse(null);
+        Parcel parcel = parcelsRepository.findById(id).orElse(null);
         if (Objects.nonNull(parcel)) {
             log.info(" <-- Successfull");
             return parcel;
@@ -64,21 +64,10 @@ public class ParcelsService {
             return null;
         }
     }
-//return parcelsRepository.findById(senderId).orElse(null);
-//    public Parcels getParcelBySenId(int senderId) {
-//        log.info(" <-- Find Parcel By ID : {}", senderId);
-//        Parcels parcel = parcelsRepository.findById(senderId).orElse(null);
-//        if(Objects.nonNull(parcel)){
-//            return parcel;
-//        }else {
-//            log.error("Not find Parcel to senderId");
-//            return null;
-//        }
-//    }
 
-    public Parcels getParcelByNumber(String parcelNumber) {
+    public Parcel getParcelByNumber(String parcelNumber) {
         log.info("Find Parcel By Parcel Number");
-        Optional<Parcels> parcel = parcelsRepository.findByParcelNo(parcelNumber);
+        Optional<Parcel> parcel = parcelsRepository.findByParcelNo(parcelNumber);
         if (parcel.isPresent()) {
             return parcel.get();
         } else {
@@ -87,31 +76,28 @@ public class ParcelsService {
         }
     }
 
-    public Parcels findBySenderId(Clients senderId){
-        Clients clients = clientService.getParcelBySenderId(senderId);
-        return parcelsRepository.findBySenderId(clients);
+    public List<Parcel> getParcelBySenderId(int senderId) {
+        log.info(" <-- Find Parcel By Sender ID: {}", senderId);
+        Client client = clientService.getClientById(senderId);
+        if (Objects.nonNull(client)) {
+            return parcelsRepository.findAllByReceiverId(client);
+        } else {
+            log.error(" <-- Can't Find Parcel By senderId: {} ",senderId);
+            return null;
+        }
     }
-//    public Parcels getParcelBySenderId(Clients senderId) {
-//        Optional<Parcels> parcel = parcelsRepository.findBySenderId(senderId);
-//        if(parcel.isPresent()){
-//            return parcel.get();
-//        }else {
-//            log.error("");
-//            return null;
-//        }
-//    }
 
 
-//    public List<Parcels> getParcelByReceiverId(int receiverId) {
-//        log.info(" <-- Find Parcel By Receiver ID: {}", receiverId);
-//        Clients client = clientService.getClientById(receiverId);
-//        if (Objects.nonNull(client)) {
-//            return parcelsRepository.findByReceiverId(client);
-//        } else {
-//            log.error(" <-- Can't Find Parcel By Receiver ID: {}", receiverId);
-//            return null;
-//        }
-//    }
+    public List<Parcel> getParcelByReceiverId(int receiverId) {
+        log.info(" <-- Find Parcel By Receiver ID: {}", receiverId);
+        Client client = clientService.getClientById(receiverId);
+        if (Objects.nonNull(client)) {
+            return parcelsRepository.findAllByReceiverId(client);
+        } else {
+            log.error(" <-- Can't Find Parcel By Receiver ID: {}", receiverId);
+            return null;
+        }
+    }
 
 
 }

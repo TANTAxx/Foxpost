@@ -1,8 +1,8 @@
 package com.foxpost.service;
 
 import com.foxpost.DTO.TrackingDTO;
-import com.foxpost.entity.Parcels;
-import com.foxpost.entity.Trackings;
+import com.foxpost.entity.Parcel;
+import com.foxpost.entity.Tracking;
 import com.foxpost.repository.TrackingsRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,9 +20,9 @@ public class TrackingsService {
     private EventsService eventsService;
     private TrackingsRepository trackingsRepository;
 
-    public List<Trackings> findAllTrackings() {
+    public List<Tracking> findAllTrackings() {
         log.info(" <-- Find all Trackings");
-      List  <Trackings> trackings = trackingsRepository.findAll();
+      List  <Tracking> trackings = trackingsRepository.findAll();
         if(Objects.nonNull(trackings)){
             log.info(" <-- Find Successfull");
             return trackingsRepository.findAll();
@@ -33,9 +33,9 @@ public class TrackingsService {
 
     }
 
-    public List<Trackings> findAllTrackingsByParcelNumber(String parcelNumber) {
+    public List<Tracking> findAllTrackingsByParcelNumber(String parcelNumber) {
         log.info(" <-- Find all Trackings");
-        Parcels parcel = parcelsService.getParcelByNumber(parcelNumber);
+        Parcel parcel = parcelsService.getParcelByNumber(parcelNumber);
         if (Objects.nonNull(parcel)) {
             return trackingsRepository.findAllByParcelId(parcel);
         } else {
@@ -44,14 +44,14 @@ public class TrackingsService {
         }
     }
 
-    public List<Parcels> getAllParcelsToOneTrack() {
+    public List<Parcel> getAllParcelsToOneTrack() {
         return parcelsService.findAllParcels();
     }
 
-    public Trackings saveOrUpdate(TrackingDTO trackingDTO) {
+    public Tracking saveOrUpdate(TrackingDTO trackingDTO) {
         log.info(" <-- in save Trackings --> {}", trackingDTO);
         LocalDate eventDate = trackingDTO.getEventDate();
-        Trackings tracking = new Trackings(
+        Tracking tracking = new Tracking(
                 eventsService.getEventById(trackingDTO.getEventId()),
                 parcelsService.getParcelById(trackingDTO.getParcelId()),
                 eventDate
@@ -75,9 +75,9 @@ public class TrackingsService {
         }
     }
 
-    public Trackings getTrackingById(int id) {
+    public Tracking getTrackingById(int id) {
         log.info(" <-- Find Tracking By ID -> {}", id);
-        Trackings track = trackingsRepository.findById(id).orElse(null);
+        Tracking track = trackingsRepository.findById(id).orElse(null);
         if(Objects.nonNull(track)){
             return track;
         }else {

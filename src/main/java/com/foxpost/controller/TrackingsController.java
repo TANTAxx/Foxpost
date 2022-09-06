@@ -1,8 +1,7 @@
 package com.foxpost.controller;
 
 import com.foxpost.DTO.TrackingDTO;
-import com.foxpost.entity.Parcels;
-import com.foxpost.entity.Trackings;
+import com.foxpost.entity.Tracking;
 import com.foxpost.service.TrackingsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,12 +14,12 @@ public class TrackingsController {
     private TrackingsService trackingsService;
 
     @GetMapping("/trackings")
-    private List<Trackings> getAllTracking() {
+    private List<Tracking> getAllTracking() {
         return trackingsService.findAllTrackings();
     }
 
     @GetMapping("/tracking/{id}")
-    private Trackings getTracking(@PathVariable("id") int id) {
+    private Tracking getTracking(@PathVariable("id") int id) {
         return trackingsService.getTrackingById(id);
     }
 
@@ -29,13 +28,13 @@ public class TrackingsController {
         trackingsService.deleteTrackings(id);
     }
 
-    @PostMapping("/trackings")
-    private Trackings saveTracking(@RequestBody TrackingDTO trackingDTO) {
+    @PostMapping("/tracking")
+    private Tracking saveTracking(@RequestBody TrackingDTO trackingDTO) {
         return trackingsService.saveOrUpdate(trackingDTO);
     }
 
     @GetMapping("/trackingsParcelNo/{parcelNo}")
-    private List<Trackings> getAllTrackingsByParcelId(@PathVariable("parcelNo") String parcelNumber) {
+    private List<Tracking> getAllTrackingsByParcelNo(@PathVariable("parcelNo") String parcelNumber) {
         return trackingsService.findAllTrackingsByParcelNumber(parcelNumber);
     }
 }

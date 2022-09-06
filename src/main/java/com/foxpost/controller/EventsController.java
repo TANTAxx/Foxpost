@@ -1,6 +1,6 @@
 package com.foxpost.controller;
 
-import com.foxpost.entity.Events;
+import com.foxpost.entity.Event;
 import com.foxpost.service.EventsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,20 +13,20 @@ public class EventsController {
     private EventsService eventsService;
 
     @GetMapping("/events")
-    private List<Events> getAllEvents() {
+    private List<Event> getAllEvents() {
         return eventsService.findByAllEvents();
     }
 
-    @GetMapping("/events/{id}")
-    private Events getEvent(@PathVariable("id") short id) {
+    @GetMapping("/event/{id}")
+    private Event getEvent(@PathVariable("id") short id) {
         return eventsService.getEventById(id);
     }
 
 
-    @PostMapping("/events")
-    private int saveEvent(@RequestBody Events events) {
-        eventsService.saveOrUpdate(events);
-        return events.getId();
+    @PostMapping("/event")
+    private int saveEvent(@RequestBody Event event) {
+        eventsService.saveOrUpdate(event);
+        return event.getId();
     }
 
     @DeleteMapping("/event/{id}")

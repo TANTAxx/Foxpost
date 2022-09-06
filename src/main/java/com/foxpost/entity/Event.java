@@ -12,7 +12,8 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Events {
+@Table(name = "events")
+public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private short id; // id
@@ -34,7 +35,7 @@ public class Events {
         return sb.toString();
     }
 
-    public Events(String eventName) {
+    public Event(String eventName) {
         super();
         this.eventName = eventName;
     }

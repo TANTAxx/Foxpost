@@ -1,14 +1,12 @@
 package com.foxpost.controller;
 
 import com.foxpost.DTO.ParcelsDTO;
-import com.foxpost.entity.Clients;
-import com.foxpost.entity.Parcels;
+import com.foxpost.entity.Parcel;
 import com.foxpost.service.ParcelsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class ParcelsController {
@@ -16,23 +14,22 @@ public class ParcelsController {
     private ParcelsService parcelsService;
 
     @GetMapping("/parcels")
-    private List<Parcels> getAllParcels() {
+    private List<Parcel> getAllParcels() {
         return parcelsService.findAllParcels();
     }
 
-//        Csomagok ügyfelenként(címzett) receiveredId
-//    @GetMapping("/parcelRecId/{receiverId}")
-//    private List<Parcels> getParcelToReceiverId(@PathVariable("receiverId") int receiverId) {
-//        return parcelsService.getParcelByReceiverId(receiverId);
-//    }
-
-    //    Csomagok ügyfelenként (feladó) senderId
-    @GetMapping("/parcelSenId/{senderId}")
-    private Parcels getParcelToSenderId(@PathVariable("senderId") Clients senderId) {
-        return parcelsService.findBySenderId(senderId);
+    @GetMapping("/parcelRecId/{receiverId}")
+    private List<Parcel> getParcelToReceiverId(@PathVariable("receiverId") int receiverId) {
+        return parcelsService.getParcelByReceiverId(receiverId);
     }
+
+    @GetMapping("/parcelSenId/{senderId}")
+    private List<Parcel> getParcelToSenderId(@PathVariable("senderId") int senderId) {
+        return parcelsService.getParcelBySenderId(senderId);
+    }
+
     @GetMapping("/parcel/{id}")
-    private Parcels getParcel(@PathVariable("id") int id) {
+    private Parcel getParcel(@PathVariable("id") int id) {
         return parcelsService.getParcelById(id);
     }
 
@@ -41,8 +38,8 @@ public class ParcelsController {
         parcelsService.delete(id);
     }
 
-    @PostMapping("/parcels")
-    private Parcels saveParcel(@RequestBody ParcelsDTO parcelsDTO) {
+    @PostMapping("/parcel")
+    private Parcel saveParcel(@RequestBody ParcelsDTO parcelsDTO) {
         return parcelsService.saveOrUpdate(parcelsDTO);
     }
 

@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 
@@ -13,7 +12,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Clients {
+@Table(name = "clients")
+public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;  // ID
@@ -38,11 +38,11 @@ public class Clients {
         return sb.toString();
     }
 
-    public Clients(int id) {
+    public Client(int id) {
         this.id = id;
     }
 
-    public Clients(String clientName, String address, String zipcode, String city, String phone, String email) {
+    public Client(String clientName, String address, String zipcode, String city, String phone, String email) {
         super();
         this.clientName = clientName;
         this.address = address;

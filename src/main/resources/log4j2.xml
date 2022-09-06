@@ -1,30 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration>
+<Configuration status="WARN" monitorInterval="30">
+
+    <Properties>
+        <Property name="LOG_PATTERN">%d{yyyy-MM-dd'T'HH:mm:ss.SSSZ} %p %m%n</Property>
+    </Properties>
+
     <Appenders>
-        <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout
-                    pattern="%-30d %p [%t] %-30.30C: %msg%n%throwable" />
+
+        <Console name="Console" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
         </Console>
 
-        <RollingFile name="File" fileName="./home/tancsics/IdeaProjects/Foxpost/Logs/app-log4j2.log" filePattern="./home/tancsics/IdeaProjects/Foxpost/Logs/app-%d{-dd-MMMM-yyyy}-%i.log4j2.log.gz">
-            <PatternLayout>
-                <pattern>%d %p [%t] %C: %msg%n%throwable</pattern>
-            </PatternLayout>
+        <RollingFile name="debugLog" fileName="${sys:APP_LOG_ROOT}/application-debug.log"
+                     filePattern="${sys:APP_LOG_ROOT}/application-debug-%d{yyyy-MM-dd}-%i.log">
+            <LevelRangeFilter minLevel="DEBUG" maxLevel="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${LOG_PATTERN}"/>
             <Policies>
-                <OnStartupTriggeringPolicy />
-                <SizeBasedTriggeringPolicy size="1 MB" />
-                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="19500KB"/>
             </Policies>
+            <DefaultRolloverStrategy max="10"/>
         </RollingFile>
+
+        <RollingFile name="infoLog" fileName="${sys:APP_LOG_ROOT}/application-info.log"
+                     filePattern="${sys:APP_LOG_ROOT}/application-info-%d{yyyy-MM-dd}-%i.log">
+            <LevelRangeFilter minLevel="INFO" maxLevel="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="19500KB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+
+        <RollingFile name="errorLog" fileName="${sys:APP_LOG_ROOT}/application-error.log"
+                     filePattern="${sys:APP_LOG_ROOT}/application-error-%d{yyyy-MM-dd}-%i.log">
+            <LevelRangeFilter minLevel="ERROR" maxLevel="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="19500KB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+
+        <RollingFile name="springLog" fileName="${sys:APP_LOG_ROOT}/spring.log"
+                     filePattern="${sys:APP_LOG_ROOT}/spring-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="19500KB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="1"/>
+        </RollingFile>
+
+        <RollingFile name="aopLog" fileName="${sys:APP_LOG_ROOT}/application-aop.log"
+                     filePattern="${sys:APP_LOG_ROOT}/application-aop-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="19500KB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="1"/>
+        </RollingFile>
+
     </Appenders>
 
     <Loggers>
-        <Root level="INFO">
-            <AppenderRef ref="Console" />
-            <AppenderRef ref="File" />
+
+        <Logger name="com.foxpost" additivity="false">
+            <AppenderRef ref="aopLog"/>
+            <AppenderRef ref="Console"/>
+        </Logger>
+
+        <Logger name="com.foxpost" additivity="false">
+            <AppenderRef ref="debugLog"/>
+            <AppenderRef ref="infoLog"/>
+            <AppenderRef ref="errorLog"/>
+            <AppenderRef ref="Console"/>
+        </Logger>
+
+        <Logger name="org.springframework" additivity="false">
+            <AppenderRef ref="springLog"/>
+            <AppenderRef ref="Console"/>
+        </Logger>
+
+        <Root level="all">
+            <AppenderRef ref="Console"/>
         </Root>
 
-        <Logger name="com.foxpost" level="DEBUG"/>
     </Loggers>
 
 </Configuration>

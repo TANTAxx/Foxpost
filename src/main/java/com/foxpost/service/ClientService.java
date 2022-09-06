@@ -1,6 +1,6 @@
 package com.foxpost.service;
 
-import com.foxpost.entity.Clients;
+import com.foxpost.entity.Client;
 import com.foxpost.repository.ClientRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -16,14 +15,14 @@ import java.util.Optional;
 public class ClientService {
     private ClientRepository clientRepository;
 
-    public List<Clients> findByAllClients() {
+    public List<Client> findByAllClients() {
         log.info(" <-- Find all Clients");
         return clientRepository.findAll();
     }
 
-    public Clients getClientById(int id) {
+    public Client getClientById(int id) {
         log.info(" <-- Find One Client by ID: {}", id);
-        Clients client = clientRepository.findById(id).orElse(null);
+        Client client = clientRepository.findById(id).orElse(null);
         if (Objects.nonNull(client)) {
             return client;
         } else {
@@ -32,25 +31,25 @@ public class ClientService {
         }
     }
 
-    public void saveOrUpdate(Clients clients) {
-        log.info(" <-- Save Client: {}", clients);
-        if (Objects.nonNull(clients)) {
-            clientRepository.save(clients);
+    public void saveOrUpdate(Client client) {
+        log.info(" <-- Save Client: {}", client);
+        if (Objects.nonNull(client)) {
+            clientRepository.save(client);
         } else {
-            log.error(" <-- Can't Save Client: {}", clients);
+            log.error(" <-- Can't Save Client: {}", client);
         }
-        log.info(" <-- Save successfull: {} ", clients);
+        log.info(" <-- Save successfull: {} ", client);
     }
 
-    public Clients getParcelBySenderId(Clients senderId) {
-        Optional<Clients> parcel = clientRepository.findBySenderId(senderId);
-        if(parcel.isPresent()){
-            return parcel.get();
-        }else {
-            log.error("");
-            return null;
-        }
-    }
+//    public Clients getParcelBySenderId(Clients senderId) {
+//        Optional<Clients> parcel = clientRepository.findBySenderId(senderId);
+//        if(parcel.isPresent()){
+//            return parcel.get();
+//        }else {
+//            log.error("");
+//            return null;
+//        }
+//    }
     public void deleteClient(int id) {
         log.info(" <-- in Delete Client: {}", id);
         if (Objects.nonNull(id)) {

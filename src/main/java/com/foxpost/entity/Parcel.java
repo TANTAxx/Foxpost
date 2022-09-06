@@ -9,25 +9,27 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @Data
-public class Parcels {
+@Table(name = "parcels")
+public class Parcel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;  // ID
 
     @OneToMany
     @JoinColumn(referencedColumnName = "id")
-    private List<Trackings> track;
+    @Transient
+    private List<Tracking> track;
     @OneToOne
     @JoinColumn(referencedColumnName = "ID")
-    private Clients senderId;
+    private Client senderId;
 
     @OneToOne
     @JoinColumn(referencedColumnName = "ID")
-    private Clients receiverId;
+    private Client receiverId;
 
     private String parcelNo;
 
-    public Parcels(Clients senderId, Clients receiverId, String parcelNo) {
+    public Parcel(Client senderId, Client receiverId, String parcelNo) {
         this.parcelNo = parcelNo;
         this.senderId = senderId;
         this.receiverId = receiverId;
