@@ -13,6 +13,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Slf4j
 public class ClientService {
+
     private ClientRepository clientRepository;
 
     public List<Client> findByAllClients() {
@@ -24,6 +25,7 @@ public class ClientService {
         log.info(" <-- Find One Client by ID: {}", id);
         Client client = clientRepository.findById(id).orElse(null);
         if (Objects.nonNull(client)) {
+            log.info(" <-- Find Successfull");
             return client;
         } else {
             log.error(" <-- Cant Find One Client by ID: {}", id);
@@ -41,7 +43,7 @@ public class ClientService {
         log.info(" <-- Save successfull: {} ", client);
     }
 
-//    public Clients getParcelBySenderId(Clients senderId) {
+    //    public Clients getParcelBySenderId(Clients senderId) {
 //        Optional<Clients> parcel = clientRepository.findBySenderId(senderId);
 //        if(parcel.isPresent()){
 //            return parcel.get();

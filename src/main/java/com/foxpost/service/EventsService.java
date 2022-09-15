@@ -26,6 +26,7 @@ public class EventsService {
         log.info(" <-- Get Event By ID: {}", id);
         Event event = eventsRepository.findById(id).orElse(null);
         if (Objects.nonNull(id)) {
+            log.info(" <-- Find Successfull");
             return event;
         } else {
             log.error("Can't find Event");

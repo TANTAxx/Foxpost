@@ -1,5 +1,6 @@
 package com.foxpost.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -18,6 +19,7 @@ public class Parcel {
     @OneToMany
     @JoinColumn(referencedColumnName = "id")
     @Transient
+    @JsonIgnore
     private List<Tracking> track;
     @OneToOne
     @JoinColumn(referencedColumnName = "ID")

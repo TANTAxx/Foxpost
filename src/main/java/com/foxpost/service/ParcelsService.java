@@ -36,6 +36,7 @@ public class ParcelsService {
                 parcelNO
         );
         if (Objects.nonNull(parcel)) {
+            log.info(" <-- Save Successfull");
             return parcelsRepository.save(parcel);
         } else {
             log.error(" <-- Can't Save Parcel: {}", parcelsDTO);
@@ -51,6 +52,7 @@ public class ParcelsService {
         } else {
             log.error(" <-- Can't Delete Parcel: {}", id);
         }
+        log.info("Delete Successfull");
     }
 
     public Parcel getParcelById(int id) {
@@ -69,6 +71,7 @@ public class ParcelsService {
         log.info("Find Parcel By Parcel Number");
         Optional<Parcel> parcel = parcelsRepository.findByParcelNo(parcelNumber);
         if (parcel.isPresent()) {
+            log.info("Successfull");
             return parcel.get();
         } else {
             log.error("Parcel not found!");
@@ -80,6 +83,7 @@ public class ParcelsService {
         log.info(" <-- Find Parcel By Sender ID: {}", senderId);
         Client client = clientService.getClientById(senderId);
         if (Objects.nonNull(client)) {
+            log.info("Successfull");
             return parcelsRepository.findAllByReceiverId(client);
         } else {
             log.error(" <-- Can't Find Parcel By senderId: {} ",senderId);
@@ -92,6 +96,7 @@ public class ParcelsService {
         log.info(" <-- Find Parcel By Receiver ID: {}", receiverId);
         Client client = clientService.getClientById(receiverId);
         if (Objects.nonNull(client)) {
+            log.info("Successfull");
             return parcelsRepository.findAllByReceiverId(client);
         } else {
             log.error(" <-- Can't Find Parcel By Receiver ID: {}", receiverId);

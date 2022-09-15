@@ -1,17 +1,17 @@
 package com.foxpost.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Size;
+import java.util.ArrayList;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
+@Data
 @Table(name = "clients")
 public class Client {
     @Id
@@ -22,9 +22,10 @@ public class Client {
     private String zipcode; // Ügyfél irányítószáma
     private String city;  // Város
     private String phone; // telefonszáma
+    @Email
     private String email; // email címe
 
-    @Override
+   @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("Ugyfelek{");
         sb.append("id=").append(id);

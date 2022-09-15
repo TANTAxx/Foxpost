@@ -37,6 +37,7 @@ public class TrackingsService {
         log.info(" <-- Find all Trackings");
         Parcel parcel = parcelsService.getParcelByNumber(parcelNumber);
         if (Objects.nonNull(parcel)) {
+            log.info("Successfull");
             return trackingsRepository.findAllByParcelId(parcel);
         } else {
             log.error("Get in Tracks Parcel not Found");
@@ -57,6 +58,7 @@ public class TrackingsService {
                 eventDate
         );
         if (Objects.nonNull(tracking)) {
+            log.info("Successfull");
             return trackingsRepository.save(tracking);
         } else {
             log.error("In save Trackings ERROR");
@@ -79,6 +81,7 @@ public class TrackingsService {
         log.info(" <-- Find Tracking By ID -> {}", id);
         Tracking track = trackingsRepository.findById(id).orElse(null);
         if(Objects.nonNull(track)){
+            log.info("Successfull");
             return track;
         }else {
             log.error(" <-- Can't Find track By Id: {}", id);
